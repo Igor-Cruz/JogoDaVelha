@@ -14,10 +14,24 @@ let player = ''
 let warning = ''
 let playing = false
 
+reset()
+
 //Events
 document.querySelector('.reset').addEventListener('click', reset)
+document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('click', itemClick)
+})
 
 //Functions
+
+function itemClick(event) {
+  let item = event.target.getAttribute('data-item')
+  if (square[item] === '') {
+    square[item] = player
+    renderSquare()
+    togglePlayer()
+  }
+}
 function reset() {
   warning = ''
 
@@ -27,5 +41,43 @@ function reset() {
     player = 'x'
   } else {
     player = '0'
+  }*/
+
+  for (let i in square) {
+    square[i] = ''
+  }
+
+  playing = true
+
+  renderSquare()
+  renderInfo()
+}
+
+function renderSquare() {
+  for (let i in square) {
+    let item = document.querySelector(`div[data-item=${i}]`)
+    item.innerHTML = square[i]
+    /*if (square[i !== '']) {
+      item.innerHTML = square[i]
+    } else {
+      item.innerHTML = ''
+    }*/
+  }
+
+  checkGame()
+}
+
+function renderInfo() {
+  document.querySelector('.vez').innerHTML = player
+  document.querySelector('.resultado').innerHTML = warning
+}
+
+function togglePlayer() {
+  player = player === 'x' ? 'o' : 'x'
+  renderInfo()
+  /* if (player === 'x') {
+    player = 'o'
+  } else {
+    player = 'x'
   }*/
 }
